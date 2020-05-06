@@ -344,7 +344,11 @@ def Inception_Inflated3d(include_top=True,
 
     branch_3 = MaxPooling3D((3, 3, 3), strides=(1, 1, 1), padding='same', name='MaxPool2d_3b_3a_3x3')(x)
     branch_3 = conv3d_bn(branch_3, 32, 1, 1, 1, padding='same', name='Conv3d_3b_3b_1x1')
-
+    
+    ######edit##############
+    q = MaxPooling3D((3, 3, 3), strides=(1, 1, 1), padding='same', name='MaxPool2d_3b_3a_3x3')(x)
+    q = conv3d_bn(q, 32, 1, 1, 1, padding='same', name='Conv3d_3b_3b_1x1')
+    ########################
     x = layers.concatenate(
         [branch_0, branch_1, branch_2, branch_3],
         axis=channel_axis,
@@ -520,7 +524,7 @@ def Inception_Inflated3d(include_top=True,
 
     inputs = img_input
     # create model
-    model = Model(inputs, x, name='i3d_inception')
+    model = Model(inputs, q, name='i3d_inception')
 
     # load weights
     if weights in WEIGHTS_NAME:
