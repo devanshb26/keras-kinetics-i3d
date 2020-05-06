@@ -524,7 +524,7 @@ def Inception_Inflated3d(include_top=True,
 
     inputs = img_input
     # create model
-    model = Model(inputs, q, name='i3d_inception')
+    model = Model(inputs, x, name='i3d_inception')
 
     # load weights
     if weights in WEIGHTS_NAME:
