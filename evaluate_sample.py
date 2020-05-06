@@ -8,7 +8,7 @@ import argparse
 
 from i3d_inception import Inception_Inflated3d
 
-NUM_FRAMES = 79
+NUM_FRAMES = 10
 FRAME_HEIGHT = 224
 FRAME_WIDTH = 224
 NUM_RGB_CHANNELS = 3
