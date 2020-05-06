@@ -5,7 +5,7 @@ Evaluates a RGB and Flow sample similar to the paper's github repo: 'https://git
 
 import numpy as np
 import argparse
-
+from keras.models import Model
 from i3d_inception import Inception_Inflated3d
 
 NUM_FRAMES = 10
@@ -45,8 +45,8 @@ def main(args):
                 weights='rgb_imagenet_and_kinetics',
                 input_shape=(NUM_FRAMES, FRAME_HEIGHT, FRAME_WIDTH, NUM_RGB_CHANNELS),
                 classes=NUM_CLASSES)
-       
-        print(rgb_model.summary())  
+        model_rgb=Model(inputs=model_rgb.input, outputs=model_rgb.get_layer('Conv3d_3c_3b_1x1').output)
+        print(model_rgb.summary())  
         # load RGB sample (just one example)
 #         rgb_sample = np.load(SAMPLE_DATA_PATH['rgb'])
         
