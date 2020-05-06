@@ -71,7 +71,8 @@ def main(args):
                 input_shape=(NUM_FRAMES, FRAME_HEIGHT, FRAME_WIDTH, NUM_FLOW_CHANNELS),
                 classes=NUM_CLASSES)
 
-        print(rgb_model.summary)
+#         print(rgb_model.summary)
+        rgb_model.summary
         # load flow sample (just one example)
 #         flow_sample = np.load(SAMPLE_DATA_PATH['flow'])
         
@@ -98,7 +99,7 @@ def main(args):
 #     for index in sorted_indices[:20]:
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
 
-    return rgb_model.summary
+    return 
 
 
 if __name__ == '__main__':
