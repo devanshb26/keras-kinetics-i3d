@@ -98,7 +98,7 @@ def main(args):
 #     for index in sorted_indices[:20]:
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
 
-    return
+    return rgb_model.summary
 
 
 if __name__ == '__main__':
