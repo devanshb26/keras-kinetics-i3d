@@ -71,7 +71,7 @@ def main(args):
                 input_shape=(NUM_FRAMES, FRAME_HEIGHT, FRAME_WIDTH, NUM_FLOW_CHANNELS),
                 classes=NUM_CLASSES)
 
-#         print(rgb_model.summary)
+        print(rgb_model)
         rgb_model.summary
         # load flow sample (just one example)
 #         flow_sample = np.load(SAMPLE_DATA_PATH['flow'])
