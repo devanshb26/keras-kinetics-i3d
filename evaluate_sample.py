@@ -17,8 +17,8 @@ NUM_FLOW_CHANNELS = 2
 NUM_CLASSES = 400
 
 SAMPLE_DATA_PATH = {
-    'rgb' : 'data/v_CricketShot_g04_c01_rgb.npy',
-    'flow' : 'data/v_CricketShot_g04_c01_flow.npy'
+    'rgb' : 'data/v_CricketShot_g04_c01_rgb.gif',
+    'flow' : 'data/v_CricketShot_g04_c01_flow.gif'
 }
 
 LABEL_MAP_PATH = 'data/label_map.txt'
@@ -47,10 +47,10 @@ def main(args):
                 classes=NUM_CLASSES)
 
         # load RGB sample (just one example)
-#         rgb_sample = np.load(SAMPLE_DATA_PATH['rgb'])
+        rgb_sample = np.load(SAMPLE_DATA_PATH['rgb'])
         
         # make prediction
-#         rgb_logits = rgb_model.predict(rgb_sample)
+        rgb_logits = rgb_model.predict(rgb_sample)
 
 
     if args.eval_type in ['flow', 'joint']:
@@ -70,34 +70,32 @@ def main(args):
                 weights='flow_imagenet_and_kinetics',
                 input_shape=(NUM_FRAMES, FRAME_HEIGHT, FRAME_WIDTH, NUM_FLOW_CHANNELS),
                 classes=NUM_CLASSES)
-
-        print(rgb_model)
-        rgb_model.summary
+            
         # load flow sample (just one example)
-#         flow_sample = np.load(SAMPLE_DATA_PATH['flow'])
+        flow_sample = np.load(SAMPLE_DATA_PATH['flow'])
         
         # make prediction
-#         flow_logits = flow_model.predict(flow_sample)
+        flow_logits = flow_model.predict(flow_sample)
 
 
     # produce final model logits
-#     if args.eval_type == 'rgb':
-#         sample_logits = rgb_logits
-#     elif args.eval_type == 'flow':
-#         sample_logits = flow_logits
-#     else: # joint
-#         sample_logits = rgb_logits + flow_logits
+    if args.eval_type == 'rgb':
+        sample_logits = rgb_logits
+    elif args.eval_type == 'flow':
+        sample_logits = flow_logits
+    else: # joint
+        sample_logits = rgb_logits + flow_logits
 
-#     # produce softmax output from model logit for class probabilities
-#     sample_logits = sample_logits[0] # we are dealing with just one example
-#     sample_predictions = np.exp(sample_logits) / np.sum(np.exp(sample_logits))
+    # produce softmax output from model logit for class probabilities
+    sample_logits = sample_logits[0] # we are dealing with just one example
+    sample_predictions = np.exp(sample_logits) / np.sum(np.exp(sample_logits))
 
-#     sorted_indices = np.argsort(sample_predictions)[::-1]
+    sorted_indices = np.argsort(sample_predictions)[::-1]
 
-#     print('\nNorm of logits: %f' % np.linalg.norm(sample_logits))
-#     print('\nTop classes and probabilities')
-#     for index in sorted_indices[:20]:
-#         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
+    print('\nNorm of logits: %f' % np.linalg.norm(sample_logits))
+    print('\nTop classes and probabilities')
+    for index in sorted_indices[:20]:
+        print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
 
     return 
 
