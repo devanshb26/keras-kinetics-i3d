@@ -91,7 +91,7 @@ def main(args):
         # make prediction
 #         flow_logits = flow_model.predict(flow_sample)
         model_flow=Model(inputs=flow_model.input, outputs=flow_model.get_layer('Conv3d_3c_3b_1x1').output)
-        print(model_flow.summary())  
+#         print(model_flow.summary())  
     # produce final model logits
 #     if args.eval_type == 'rgb':
 #         sample_logits = rgb_logits
@@ -110,26 +110,34 @@ def main(args):
 #     print('\nTop classes and probabilities')
 #     for index in sorted_indices[:20]:
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
-
+    import STLSTM
+    NUM_CELL = 4
+    FILTERS = 128
+    KERNEL_SIZE = 3
+    
     #Model 1
     m1,m2,m3=model_res(input3)
     #MODEL 2
-    rgb=model_rgb(input1)
-    flow=model_flow(input2)
-    x=STLSTM(rgb+flow)
-    x=STLSTM(x)
-    x=STLSTM(x)
-    x=DCONV(x)
-    x=CONV(x)
-    #Combine
-    x=CONV(m1+x)
-    x=DCONV(x)
-    x=CONV(m2+x)
-    x=DCONV(x)
-    x=CONV(m3+x)
-    output=DCONV(x)
+#     rgb=model_rgb(input1)
+#     flow=model_flow(input2)
+    cells = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS, kernel_size=KERNEL_SIZE) for _ in range(NUM_CELL)])
+    x=STLSTM.STLSTM2D(cells, return_sequences=True)(model_rgb.output+model_flow.output)
+    model_final=Model(inputs=[model_rgb.input,model_flow.input],outputs=x)
+    print(model_final.summary())
+#     x=STLSTM(rgb+flow)
+#     x=STLSTM(x)
+#     x=STLSTM(x)
+#     x=DCONV(x)
+#     x=CONV(x)
+#     #Combine
+#     x=CONV(m1+x)
+#     x=DCONV(x)
+#     x=CONV(m2+x)
+#     x=DCONV(x)
+#     x=CONV(m3+x)
+#     output=DCONV(x)
     
-    model_final=Model(inputs=[input1,input2,input3],outputs=output)
+#     model_final=Model(inputs=[input1,input2,input3],outputs=output)
     
     
     
