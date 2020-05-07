@@ -108,8 +108,8 @@ def main(args):
 #     for index in sorted_indices[:20]:
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
     import STLSTM
-    NUM_CELL = 4
-    FILTERS = [128,64,64,64]
+    NUM_CELL = 1
+    FILTERS = 128
     KERNEL_SIZE = 3
     
     #Model 1
@@ -117,7 +117,7 @@ def main(args):
     #MODEL 2
 #     rgb=model_rgb(input1)
 #     flow=model_flow(input2)
-    cells = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS[i], kernel_size=KERNEL_SIZE,data_format="channels_last") for i in range(NUM_CELL)])
+    cells = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS[i], kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
     x=STLSTM.STLSTM2D(cells, return_sequences=True)(model_rgb.output)
     model_final=Model(inputs=model_rgb.input,outputs=x)
     print(model_final.summary())
