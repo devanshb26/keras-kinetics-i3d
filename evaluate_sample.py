@@ -11,7 +11,7 @@ from i3d_inception import Inception_Inflated3d
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
-from tensorflow.keras.layers import Conv3DTranspose,Conv3D
+from tensorflow.keras.layers import Conv3DTranspose,Conv3D,Input
 import numpy as np
 
 NUM_FRAMES = 10
@@ -32,7 +32,7 @@ LABEL_MAP_PATH = 'data/label_map.txt'
 def main(args):
     
     model = ResNet50(weights='imagenet')
-#     model_res = Model(inputs=model.input, outputs=[model.get_layer('activation_1').output,model.get_layer('activation_7').output,model.get_layer('activation_7').output])
+    model_res = Model(inputs=model.input, outputs=[model.get_layer('conv1_relu').output,model.get_layer('conv2_block1_out').output,model.get_layer('conv3_block1_out').output])
     
     
     # load the kinetics classes
@@ -120,24 +120,31 @@ def main(args):
 #     m1,m2,m3=model_res(input3)
     #MODEL 2
 #     rgb=model_rgb(input1)
-#     flow=model_flow(input2)
+#     flow=model_flow(input2)x_rgb=Input(shape=(10,224,224,3))
+
     cells0 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS0, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
     cells1 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS1, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
     cells2 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS2, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
     cells3 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS3, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
     
     
-    
-    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(model_rgb.output)
+    x_rgb=Input(shape=(10,224,224,3))
+    x_flow=Input(shape=(10,224,224,2))
+    x=model_rgb(x_rgb)
+    x_flow1=model_flow(x_flow)
+#     for i in range(10):
+#         [m1,m2,m3]=mode_res(x_rgb)
+        
+    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x+x_flow1)
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
     x=Conv3DTranspose(64,(3,3,3),strides=(1, 1, 1), padding='valid', data_format="channels_last")(x)
     x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid',data_format="channels_last")(x)
     
-    model_final=Model(inputs=model_rgb.input,outputs=x)
+    model_final=Model(inputs=[x_rgb,x_flow],outputs=x)
 #     print(model_final.summary())
-    print(rgb_model.summary())
+    print(model_final.summary())
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
