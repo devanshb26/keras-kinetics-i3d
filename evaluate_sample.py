@@ -127,7 +127,7 @@ def main(args):
     
     
     
-    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(model_rgb.output)
+    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(model_rgb.output+model_flow.output)
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
