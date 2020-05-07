@@ -133,7 +133,7 @@ def main(args):
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
     x=Conv3DTranspose(64,(3,3,3),strides=(1, 1, 1), padding='valid', output_padding=None, data_format="channels_last")(x)
-    x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid', output_padding=None, data_format="channels_last")(x)
+    x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid',data_format="channels_last")(x)
     
     model_final=Model(inputs=model_rgb.input,outputs=x)
     print(model_final.summary())
