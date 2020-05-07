@@ -8,6 +8,11 @@ import argparse
 from keras.models import Model
 from i3d_inception import Inception_Inflated3d
 
+from keras.applications.resnet50 import ResNet50
+from keras.preprocessing import image
+from keras.applications.resnet50 import preprocess_input, decode_predictions
+import numpy as np
+
 NUM_FRAMES = 10
 FRAME_HEIGHT = 224
 FRAME_WIDTH = 224
@@ -24,6 +29,14 @@ SAMPLE_DATA_PATH = {
 LABEL_MAP_PATH = 'data/label_map.txt'
 
 def main(args):
+    
+    model = ResNet50(weights='imagenet')
+    model_res = Model(inputs=model.input, outputs=[model.get_layer('activation_1').output,model.get_layer('activation_7').output,model.get_layer('activation_7').output])
+    model1 = Model(inputs=model.input, outputs=model.get_layer('activation_1').output)
+    model2 = Model(inputs=model.input,outputs=model.get_layer('activation_7').output)
+    model3 = Model(inputs=model.input,outputs=model.get_layer('activation_7').output)
+    
+    
     # load the kinetics classes
     kinetics_classes = [x.strip() for x in open(LABEL_MAP_PATH, 'r')]
 
@@ -98,6 +111,30 @@ def main(args):
 #     for index in sorted_indices[:20]:
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
 
+    #Model 1
+    m1,m2,m3=model_res(input3)
+    #MODEL 2
+    rgb=model_rgb(input1)
+    flow=model_flow(input2)
+    x=STLSTM(rgb+flow)
+    x=STLSTM(x)
+    x=STLSTM(x)
+    x=DCONV(x)
+    x=CONV(x)
+    #Combine
+    x=CONV(m1+x)
+    x=DCONV(x)
+    x=CONV(m2+x)
+    x=DCONV(x)
+    x=CONV(m3+x)
+    output=DCONV(x)
+    
+    model_final=Model(inputs=[input1,input2,input3],outputs=output)
+    
+    
+    
+    
+    
     return 
 
 
