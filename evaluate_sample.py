@@ -11,6 +11,7 @@ from i3d_inception import Inception_Inflated3d
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
+from tensorflow.keras.layers import Conv3DTranspose,Conv3D
 import numpy as np
 
 NUM_FRAMES = 10
@@ -127,12 +128,16 @@ def main(args):
     
     
     
-    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(model_rgb.output+model_flow.output)
+    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(model_rgb.output)
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
-    model_final=Model(inputs=[model_rgb.input,model_flow.input],outputs=x)
+    x=Conv3DTranspose(64,(3,3,3),strides=(1, 1, 1), padding='valid', output_padding=None, data_format="channels_last")(x)
+    x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid', output_padding=None, data_format="channels_last")(x)
+    
+    model_final=Model(inputs=model_rgb.input,outputs=x)
     print(model_final.summary())
+    
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
