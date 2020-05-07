@@ -108,7 +108,7 @@ def main(args):
 #     for index in sorted_indices[:20]:
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
     import STLSTM
-    NUM_CELL = 1
+    NUM_CELL = 5
     FILTERS = 128
     KERNEL_SIZE = 3
     
