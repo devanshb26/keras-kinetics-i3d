@@ -12,7 +12,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 from tensorflow.keras.layers import Conv3DTranspose,Conv3D,Input
-from keras.layers.merge import concatenate
+from tensorflow.keras.backend import concatenate
 from tensorflow.keras.utils import plot_model
 import numpy as np
 
@@ -137,7 +137,7 @@ def main(args):
     [merge1,merge2,merge3]=model_res(x_rgb[ : ,0, : , : , : ]) 
     for i in range(1,10):
         [m1,m2,m3]=model_res(x_rgb[:,i, : , : , : ])
-        merge1=tensorflow.keras.backend.concatenate((merge1,m1), axis=-1)
+        merge1=concatenate((merge1,m1), axis=-1)
     print(merge1.shape)    
     x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x+x_flow1)
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
