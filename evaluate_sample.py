@@ -116,7 +116,7 @@ def main(args):
     KERNEL_SIZE = 3
     
     #Model 1
-    m1,m2,m3=model_res(input3)
+#     m1,m2,m3=model_res(input3)
     #MODEL 2
 #     rgb=model_rgb(input1)
 #     flow=model_flow(input2)
