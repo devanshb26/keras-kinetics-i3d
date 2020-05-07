@@ -110,8 +110,8 @@ def main(args):
     import STLSTM
     NUM_CELL = 1
     FILTERS0 = 128
-    FILTERS0 = 64
-    FILTERS0 = 64
+    FILTERS1 = 64
+    FILTERS2 = 64
     FILTERS3 = 64
     KERNEL_SIZE = 3
     
