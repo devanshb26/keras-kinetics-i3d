@@ -5,12 +5,12 @@ Evaluates a RGB and Flow sample similar to the paper's github repo: 'https://git
 
 import numpy as np
 import argparse
-from keras.models import Model
+from tensorflow.python.keras.models import Model
 from i3d_inception import Inception_Inflated3d
 
-from keras.applications.resnet50 import ResNet50
-from keras.preprocessing import image
-from keras.applications.resnet50 import preprocess_input, decode_predictions
+from tensorflow.python.keras.applications.resnet50 import ResNet50
+from tensorflow.python.keras.preprocessing import image
+from tensorflow.python.keras.applications.resnet50 import preprocess_input, decode_predictions
 import numpy as np
 
 NUM_FRAMES = 10
