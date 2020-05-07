@@ -136,7 +136,7 @@ def main(args):
     x_flow1=model_flow(x_flow)
     [merge1,merge2,merge3]=model_res(x_rgb[0,: ,: , :]) 
     for i in range(1,10):
-        [m1,m2,m3]=mode_res(x_rgb[i, : , : , : ])
+        [m1,m2,m3]=model_res(x_rgb[i, : , : , : ])
         merge1=concatenate[merge1,m1]
     print(merge1.shape)    
     x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x+x_flow1)
