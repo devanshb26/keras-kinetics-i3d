@@ -136,8 +136,8 @@ def main(args):
     x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid',data_format="channels_last")(x)
     
     model_final=Model(inputs=model_rgb.input,outputs=x)
-    print(model_final.summary())
-    
+#     print(model_final.summary())
+      print(model_rgb.summary())
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
