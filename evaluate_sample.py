@@ -145,8 +145,8 @@ def main(args):
     
     model_final=Model(inputs=[x_rgb,x_flow],outputs=x)
 #     print(model_final.summary())
-#     print(model_final.summary())
-    print(plot_model(model_final))
+    print(model_final.summary())
+    plot_model(model_final,to_file='feature_extract.png')
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
