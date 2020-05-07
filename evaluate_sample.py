@@ -31,7 +31,7 @@ LABEL_MAP_PATH = 'data/label_map.txt'
 def main(args):
     
     model = ResNet50(weights='imagenet')
-    model_res = Model(inputs=model.input, outputs=[model.get_layer('activation_1').output,model.get_layer('activation_7').output,model.get_layer('activation_7').output])
+#     model_res = Model(inputs=model.input, outputs=[model.get_layer('activation_1').output,model.get_layer('activation_7').output,model.get_layer('activation_7').output])
     
     
     # load the kinetics classes
