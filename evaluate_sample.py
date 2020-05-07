@@ -119,7 +119,7 @@ def main(args):
 #     flow=model_flow(input2)
     cells = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS, kernel_size=KERNEL_SIZE,data_format="channels_last") for _ in range(NUM_CELL)])
     x=STLSTM.STLSTM2D(cells, return_sequences=True,input_shape=(5, 28, 28, 64))
-    print(x)
+    print(x.shape)
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
