@@ -78,7 +78,7 @@ def main(args):
         # make prediction
 #         flow_logits = flow_model.predict(flow_sample)
     
-          print(flow_model.summary())  
+        print(flow_model.summary())  
     # produce final model logits
 #     if args.eval_type == 'rgb':
 #         sample_logits = rgb_logits
