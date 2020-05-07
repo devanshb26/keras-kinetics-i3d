@@ -135,7 +135,7 @@ def main(args):
     x_flow=Input(shape=(10,224,224,2))
     x=model_rgb(x_rgb)
     x_flow1=model_flow(x_flow)
-    x_res=tf.reshape(x_rgb,[224,224,3*10])
+    x_res=tf.reshape(x_rgb,[:,224,224,3*10])
     [merge1,merge2,merge3]=model_res(x_res)
     print(merge1.shape)    
     x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x+x_flow1)
