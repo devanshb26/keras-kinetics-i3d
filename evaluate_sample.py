@@ -109,7 +109,10 @@ def main(args):
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
     import STLSTM
     NUM_CELL = 1
-    FILTERS = 32
+    FILTERS0 = 128
+    FILTERS0 = 64
+    FILTERS0 = 64
+    FILTERS3 = 64
     KERNEL_SIZE = 3
     
     #Model 1
@@ -117,8 +120,17 @@ def main(args):
     #MODEL 2
 #     rgb=model_rgb(input1)
 #     flow=model_flow(input2)
-    cells = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
-    x=STLSTM.STLSTM2D(cells, return_sequences=True)(model_rgb.output)
+    cells0 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS0, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
+    cells1 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS1, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
+    cells2 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS2, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
+    cells3 = STLSTM.StackedSTLSTMCells([STLSTM.STLSTMCell(filters=FILTERS3, kernel_size=KERNEL_SIZE,padding="same",data_format="channels_last") for i in range(NUM_CELL)])
+    
+    
+    
+    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(model_rgb.output)
+    x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
+    x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
+    x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
     model_final=Model(inputs=model_rgb.input,outputs=x)
     print(model_final.summary())
 #     x=STLSTM(rgb+flow)
