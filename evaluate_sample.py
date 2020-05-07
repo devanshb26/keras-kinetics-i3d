@@ -46,7 +46,7 @@ def main(args):
                 input_shape=(NUM_FRAMES, FRAME_HEIGHT, FRAME_WIDTH, NUM_RGB_CHANNELS),
                 classes=NUM_CLASSES)
         model_rgb=Model(inputs=rgb_model.input, outputs=rgb_model.get_layer('Conv3d_3c_3b_1x1').output)
-        print(model_rgb.summary())  
+#         print(model_rgb.summary())  
         # load RGB sample (just one example)
 #         rgb_sample = np.load(SAMPLE_DATA_PATH['rgb'])
         
@@ -78,7 +78,7 @@ def main(args):
         # make prediction
 #         flow_logits = flow_model.predict(flow_sample)
     
-
+          print(flow_model.summary())  
     # produce final model logits
 #     if args.eval_type == 'rgb':
 #         sample_logits = rgb_logits
