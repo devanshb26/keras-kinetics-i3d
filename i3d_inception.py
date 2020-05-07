@@ -28,10 +28,10 @@ from tensorflow.python.keras.layers import Reshape
 from tensorflow.python.keras.layers import Lambda
 from tensorflow.python.keras.layers import GlobalAveragePooling3D
 
-from tensorflow.python.keras.engine.topology import get_source_inputs
-from tensorflow.python.keras.utils import layer_utils
-from tensorflow.python.keras.utils.data_utils import get_file
-from tensorflow.python.keras import backend as K
+from keras.engine.topology import get_source_inputs
+from keras.utils import layer_utils
+from keras.utils.data_utils import get_file
+from keras import backend as K
 
 WEIGHTS_NAME = ['rgb_kinetics_only', 'flow_kinetics_only', 'rgb_imagenet_and_kinetics', 'flow_imagenet_and_kinetics']
 
