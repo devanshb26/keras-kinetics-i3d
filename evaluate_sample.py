@@ -12,6 +12,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 from tensorflow.keras.layers import Conv3DTranspose,Conv3D,Input
+from tensorflow.keras.utils import plot_model
 import numpy as np
 
 NUM_FRAMES = 10
@@ -144,7 +145,8 @@ def main(args):
     
     model_final=Model(inputs=[x_rgb,x_flow],outputs=x)
 #     print(model_final.summary())
-    print(model_final.summary())
+#     print(model_final.summary())
+    print(plot_model(model_final))
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
