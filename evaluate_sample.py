@@ -12,7 +12,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 from tensorflow.keras.layers import Conv3DTranspose,Conv3D,Input
-from tensorflow.keras.layers.merge import concatenate
+from keras.layers.merge import concatenate
 from tensorflow.keras.utils import plot_model
 import numpy as np
 
