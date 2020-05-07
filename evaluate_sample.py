@@ -137,7 +137,7 @@ def main(args):
     
     model_final=Model(inputs=model_rgb.input,outputs=x)
 #     print(model_final.summary())
-      print(model_rgb.summary())
+    print(model_rgb.summary())
 #     x=STLSTM(rgb+flow)
 #     x=STLSTM(x)
 #     x=STLSTM(x)
