@@ -77,8 +77,8 @@ def main(args):
         
         # make prediction
 #         flow_logits = flow_model.predict(flow_sample)
-    
-        print(flow_model.summary())  
+        model_flow=Model(inputs=flow_model.input, outputs=flow_model.get_layer('Conv3d_3c_3b_1x1').output)
+        print(model_flow.summary())  
     # produce final model logits
 #     if args.eval_type == 'rgb':
 #         sample_logits = rgb_logits
