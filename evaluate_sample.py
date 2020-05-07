@@ -109,7 +109,7 @@ def main(args):
 #         print(sample_predictions[index], sample_logits[index], kinetics_classes[index])
     import STLSTM
     NUM_CELL = 1
-    FILTERS = 64
+    FILTERS = 256
     KERNEL_SIZE = 3
     
     #Model 1
