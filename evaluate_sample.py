@@ -151,6 +151,7 @@ def main(args):
     print(skip_conn2.shape)
     print(skip_conn3.shape)
     x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x+x_flow1)
+    print(x.shape)
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
