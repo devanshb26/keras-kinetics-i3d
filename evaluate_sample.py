@@ -170,6 +170,7 @@ def main(args):
     x=Conv3DTranspose(64,(3,3,3),strides=(1, 2, 2),output_padding=(0,1,1),padding='valid', data_format="channels_last")(x)
     x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid',data_format="channels_last")(x)
     print(x.shape)
+    x=Conv3D(3,(3,3,3),strides=(1, 1, 1), padding='same',data_format="channels_last")(x)
     model_final=Model(inputs=[x_rgb,x_flow],outputs=x)
 #     print(model_final.summary())
     print(model_final.summary())
