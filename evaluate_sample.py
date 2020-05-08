@@ -154,8 +154,8 @@ def main(args):
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells3, return_sequences=True)(x)
-    x=Conv3DTranspose(64,(3,3,3),strides=(2, 1, 1), padding='valid', data_format="channels_last")(x)
-    x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='same',data_format="channels_last")(x)
+    x=Conv3DTranspose(64,(3,3,3),strides=(2, 1, 1), output_padding=(1,0,0),padding='valid', data_format="channels_last")(x)
+    x=Conv3D(64,(3,3,3),strides=(1, 1, 1), padding='valid',data_format="channels_last")(x)
     
     model_final=Model(inputs=[x_rgb,x_flow],outputs=x)
 #     print(model_final.summary())
