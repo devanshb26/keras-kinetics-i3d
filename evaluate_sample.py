@@ -172,6 +172,7 @@ def main(args):
     print(x.shape)
     x=Conv3D(3,(3,3,3),strides=(1, 1, 1), padding='same',data_format="channels_last")(x)
     model_final=Model(inputs=[x_rgb,x_flow],outputs=x)
+    print(x.shape)
 #     print(model_final.summary())
     print(model_final.summary())
     plot_model(model_final,to_file='feature_extract.png')
