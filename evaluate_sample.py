@@ -118,10 +118,10 @@ def main(args):
     FILTERS2 = 64
     FILTERS3 = 64
     KERNEL_SIZE = 3
-#     for layer in model_rgb.layers:
-#         layer.trainable = False
-#     for layer in model_res.layers:
-#         layer.trainable=False
+    for layer in model_rgb.layers:
+        layer.trainable = False
+    for layer in model_res.layers:
+        layer.trainable=False
     #Model 1
 #     m1,m2,m3=model_res(input3)
     #MODEL 2
