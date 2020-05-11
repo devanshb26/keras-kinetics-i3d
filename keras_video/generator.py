@@ -360,7 +360,7 @@ class VideoFrameGenerator(Sequence):
             images.append(frames)
             labels.append(label)
 
-        return np.array(images), np.array(labels)
+        return np.array(images), np.array(images)
 
     def _get_classname(self, video: str) -> str:
         """ Find classname from video filename following the pattern """
