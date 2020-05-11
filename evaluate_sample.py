@@ -118,7 +118,10 @@ def main(args):
     FILTERS2 = 64
     FILTERS3 = 64
     KERNEL_SIZE = 3
-    
+    for layer in model_rgb.layers:
+        layer.trainable = False
+    for layer in model_res.layers:
+        layer.trainable=False
     #Model 1
 #     m1,m2,m3=model_res(input3)
     #MODEL 2
@@ -132,9 +135,9 @@ def main(args):
     
     
     x_rgb=Input(shape=(10,224,224,3))
-    x_flow=Input(shape=(10,224,224,2))
+#     x_flow=Input(shape=(10,224,224,2))
     x=model_rgb(x_rgb)
-    x_flow1=model_flow(x_flow)
+#     x_flow1=model_flow(x_flow)
     l1=[]
     l2=[]
     l3=[]
@@ -150,7 +153,7 @@ def main(args):
     print(skip_conn1.shape)
     print(skip_conn2.shape)
     print(skip_conn3.shape)
-    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x+x_flow1)
+    x=STLSTM.STLSTM2D(cells0, return_sequences=True)(x)
     
     x=STLSTM.STLSTM2D(cells1, return_sequences=True)(x)
     x=STLSTM.STLSTM2D(cells2, return_sequences=True)(x)
